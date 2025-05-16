@@ -1,0 +1,15 @@
+{
+    "name": "danila/bank-account-project",
+    "description": "Проект банка с классом BankAccount от danila",
+    "type": "project",
+    "require": {
+        "phpunit/phpunit": "^9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bank\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

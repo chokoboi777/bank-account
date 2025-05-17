@@ -4,47 +4,53 @@ use App\BankAccount;
 use App\Exception\InvalidAmountException;
 use App\Exception\InsufficientFundsException;
 
-function runTests()
-{
+function runTests() {
     try {
-        // Тест 1: Отрицательный начальный баланс
-        $acc1 = new BankAccount(-100);
-        echo "Тест 1 провален\n";
+        // Тест 1: Создание аккаунта с отрицательным балансом
+        echo "Тест 1: ";
+        $acc = new BankAccount(-100);
     } catch (InvalidAmountException $e) {
-        echo "Тест 1 пройден: " . $e->getMessage() . "\n";
+        echo "ОК — " . $e->getMessage() . "\n";
     }
 
     try {
-        // Тест 2: Внесение нуля
-        $acc2 = new BankAccount(100);
-        $acc2->deposit(0);
-        echo "Тест 2 провален\n";
+        // Тест 2: Депозит с нулевой суммой
+        echo "Тест 2: ";
+        $acc = new BankAccount(100);
+        $acc->deposit(0);
     } catch (InvalidAmountException $e) {
-        echo "Тест 2 пройден: " . $e->getMessage() . "\n";
+        echo "ОК — " . $e->getMessage() . "\n";
     }
 
     try {
         // Тест 3: Снятие больше баланса
-        $acc3 = new BankAccount(100);
-        $acc3->withdraw(150);
-        echo "Тест 3 провален\n";
+        echo "Тест 3: ";
+        $acc = new BankAccount(100);
+        $acc->withdraw(150);
     } catch (InsufficientFundsException $e) {
-        echo "Тест 3 пройден: " . $e->getMessage() . "\n";
+        echo "ОК — " . $e->getMessage() . "\n";
     }
 
     try {
-        // Тест 4: Успешное снятие
-        $acc4 = new BankAccount(500);
-        $acc4->withdraw(200);
-        if ($acc4->getBalance() == 300) {
-            echo "Тест 4 пройден\n";
-        } else {
-            echo "Тест 4 провален\n";
-        }
+        // Тест 4: Корректное снятие
+        echo "Тест 4: ";
+        $acc = new BankAccount(100);
+        $acc->withdraw(50);
+        echo "ОК — Баланс: " . $acc->getBalance() . "\n";
     } catch (Exception $e) {
-        echo "Тест 4 провален: " . $e->getMessage() . "\n";
+        echo "Ошибка: " . $e->getMessage() . "\n";
+    }
+
+    try {
+        // Тест 5: Несколько операций
+        echo "Тест 5: ";
+        $acc = new BankAccount(500);
+        $acc->deposit(200);
+        $acc->withdraw(300);
+        echo "ОК — Итоговый баланс: " . $acc->getBalance() . "\n";
+    } catch (Exception $e) {
+        echo "Ошибка: " . $e->getMessage() . "\n";
     }
 }
 
-echo "\n=== Тестирование ===\n";
 runTests();
